@@ -1,0 +1,23 @@
+version: '3'
+services:
+  bof:
+    build: ./bof
+    volumes:
+      - ./bof/share:/home/bof:ro
+      - ./bof/xinetd:/etc/xinetd.d/bof:ro
+    ports:
+      - "10001:10005"
+  ret2code:
+    build: ./ret2code
+    volumes:
+      - ./ret2code/share:/home/ret2code:ro
+      - ./ret2code/xinetd:/etc/xinetd.d/ret2code:ro
+    ports:
+      - "10002:10005"
+  got:
+    build: ./got
+    volumes:
+      - ./got/share:/home/got:ro
+      - ./got/xinetd:/etc/xinetd.d/got:ro
+    ports:
+      - "10003:10005"
