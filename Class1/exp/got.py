@@ -1,7 +1,7 @@
 from pwn import *
 
 #r = process('../got/share/got')
-r = remote('127.0.0.1', 10003)
+r = remote('127.0.0.1', 10002)
 
 value = 0x404080
 puts_got = 0x404000
