@@ -1,0 +1,14 @@
+service FormatString1
+{
+    disable = no
+    type = UNLISTED
+    socket_type = stream
+    protocol = tcp
+    server = /home/FormatString1/run.sh
+    user = FormatString1
+    port = 10005
+    flags = REUSE
+    bind = 0.0.0.0
+    wait = no
+}
+
