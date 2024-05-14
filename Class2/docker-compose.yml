@@ -1,0 +1,37 @@
+version: '3'
+services:
+  ret2sc:
+    build: ./ret2sc
+    volumes:
+      - ./ret2sc/share:/home/ret2sc:ro
+      - ./ret2sc/xinetd:/etc/xinetd.d/ret2sc:ro
+    ports:
+      - "10003:10005"
+  orw:
+    build: ./orw
+    volumes:
+      - ./orw/share:/home/orw:ro
+      - ./orw/xinetd:/etc/xinetd.d/orw:ro
+    ports:
+      - "10004:10005"
+  rop:
+    build: ./rop
+    volumes:
+      - ./rop/share:/home/rop:ro
+      - ./rop/xinetd:/etc/xinetd.d/rop:ro
+    ports:
+      - "10005:10005"
+  format_string1:
+    build: ./format_string1
+    volumes:
+      - ./format_string1/share:/home/format_string1:ro
+      - ./format_string1/xinetd:/etc/xinetd.d/format_string1:ro
+    ports:
+      - "10006:10005"
+  format_string2:
+    build: ./format_string2
+    volumes:
+      - ./format_string2/share:/home/format_string2:ro
+      - ./format_string2/xinetd:/etc/xinetd.d/format_string2:ro
+    ports:
+      - "10007:10005"

@@ -1,11 +1,11 @@
-service FormatString1
+service format_string2
 {
     disable = no
     type = UNLISTED
     socket_type = stream
     protocol = tcp
-    server = /home/FormatString1/run.sh
-    user = FormatString1
+    server = /home/format_string2/run.sh
+    user = format_string2
     port = 10005
     flags = REUSE
     bind = 0.0.0.0
